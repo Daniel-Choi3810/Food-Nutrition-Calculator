@@ -1,6 +1,6 @@
 import time
 import numpy as np
-
+restaurant = None
 #calories, carbs, protein, total_fat, sat_fat, trans_fat, sodium, sugar, fiber
 meal_stats = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0]).astype(float)
 #above is a global list that still has all of the same stats, ill be using this array to add with the arrays you created down below
@@ -14,15 +14,16 @@ def print_message(string):  # Delays each print statement by .7 seconds.
 
 
 def intro():
+    global restaurant
     restaurant = input('\nOut of ChickfilA, Chipotle, FiveGuys, and Fuddruckers, where are you eating today?:\n')
-    if 'five' in restaurant:
+    if restaurant == 'fiveguys':
         print_message("\nFiveGuys, that's tuff.")
         fiveguys()
-    elif 'chick' in restaurant:
+    elif restaurant == 'chickfila':
         print_message("\nChick-Fil-A, that's tuff.")
-    elif 'chipotle' in restaurant:
+    elif restaurant == 'chipotle':
         print_message("\nChipotle, that's tuff.")
-    elif 'fud' in restaurant:
+    elif restaurant == 'fuddruckers':
         print_message("\nFuddruckers, that's tuff.")
     else:
         print_message("Learn to spell, holy shit. Try again.")
@@ -40,6 +41,22 @@ def repeat():  #How can I generalize this function so it can repeat for any rest
         else:
             print_message("\nDidn't get that, try again.")
 
+'''def repeat():
+    global restaurant
+    while True:
+
+        restaurant_position = {'fiveguys':0, 'chickfila':1, 'chipotle':2, 'fuddruckers':3}
+        restaurant_list = [fiveguys()]
+        more_food = input('\nAre you eating more food?  Please type yes or no: \n').lower()
+        if more_food == 'yes':
+            print_message("Christ you fatass, alright.")
+            restaurant_list[restaurant_position[restaurant]]
+        elif more_food == 'no':
+            print_message("\nThank god, go exercise.")
+            break
+        else:
+            print_message("\nDidn't get that, try again.")'''
+
 def fiveguys():
     #burger: hamburger, cheeseburger, baconburger, baconcheeseburger - fries: small, medium, large
     fiveguys_menu = np.array([[(700, 39, 39, 43, 19.5, 2, 430, 8, 2), (770, 39, 43, 49, 23.5, 2.2, 790, 8, 2), (780, 39, 43, 50, 22, 2, 690, 8, 2), (850, 39, 47, 56, 26.5, 2.2, 1050, 8, 2)], [(526, 72, 8, 23, 4, .5, 531, 2, 8), (953, 131, 15, 41, 7, 1, 962, 4, 15), (1314, 181, 20, 57, 10, 1, 1327, 6, 20)]])
@@ -52,7 +69,7 @@ def fiveguys():
         global meal_stats
         #above i am referencing the meal_stats global variable to be able to make edits to it
         food = input("\nWhat're you tryna eat?  Please state whether you want a burger or fries, f a t t y:\n").lower().replace(" ", "")
-        if 'burger' in food:
+        if food == 'burger':
             while True:
                 burger_type = input('\nOut of a hamburger, cheeseburger, baconburger, and bacon cheeseburger, which one do you want?:\n').lower().replace(" ", "")
                 if burger_type in ['hamburger', 'cheeseburger', 'baconburger', 'baconcheeseburger']:
@@ -64,7 +81,7 @@ def fiveguys():
                 else:
                     print_message('Didn\'t understand, try again.')
                     continue
-        elif 'fries' in food:
+        elif food == 'fries':
             while True:
                 fries_type = input('\nOut of small, regular, and large, what size fries do you want?:\n').lower().replace(" ", "")
                 if fries_type in ['small', 'medium', 'large', 'smallfries', 'mediumfries', 'largefries']:
@@ -88,7 +105,6 @@ def fiveguys():
         print_message("Obesity!!!!!\n\n ")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
         print_message("Whew! That's a lot of calories.")
-        #remove this from function, add it after intro at the bottom
         break
 
 def toppings(food):
