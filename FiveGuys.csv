@@ -1,0 +1,41 @@
+﻿FOOD,CALORIES,CARBS (G),PROTEIN (G),TOTAL FAT (G),SATURATED FAT (G),TRANS FAT (G),SODIUM (MG),SUGARS (G),FIBER (G)
+Burger,,,,,,,,,
+Hamburger,700,39,39,43,19.5,0,430,8,2
+Cheeseburger,840,40,47,55,26.5,0,1050,9,2
+Bacon Burger,780,39,43,50,22.5,0,690,8,2
+Bacon Cheeseburger,920,40,51,62,29.5,0,1310,9,2
+Little Burger,,,,,,,,,
+Little Hamburger,480,39,23,26,11.5,0,380,8,2
+Little Cheeseburger,550,39.5,27,32,15,0,690,8.5,2
+Little Bacon Burger,560,39,27,33,14.5,0,640,8,2
+Little Bacon Cheeseburger,630,39.5,31,39,18,0,950,8.5,2
+Dog,,,,,,,,,
+Hot Dog,545,40,18,35,15.5,0,1130,8,2
+Cheese Dog,615,40.5,22,41,19,0,1440,8.5,2
+Bacon Dog,625,40,22,42,18.5,0,1390,8,2
+Bacon Cheese Dog,695,40.5,26,48,22,0,1700,8.5,2
+Other Sandwich,,,,,,,,,
+Veggie Sandwich,440,60,16,15,6,0,1040,14,2
+Grilled Cheese,470,41,11,26,9,0,715,10,2.5
+BLT,533,42,15.5,34,11.5,0,931,9.6,2.6
+Cheese Veggie,510,60.7,20,21,9.5,0,1350,14.4,2
+Fries,,,,,,,,,
+Little Fry,526,72,8,23,4,0,531,2,8
+Regular Fries,953,131,15,41,7,0,962,4,15
+Large Fries,1314,181,20,57,10,0,1327,6,21
+Bunless Burger,,,,,,,,,
+Hamburger,440,0,32,34,16,0,100,0,0
+Cheeseburger,580,1,40,46,23,0,720,1,0
+Bacon Burger,520,0,36,41,19,0,360,0,0
+Bacon Cheeseburger,660,1,44,53,26,0,980,1,0
+Bunless Little Burger,,,,,,,,,
+Little Hamburger,220,0,16,17,8,0,50,0,0
+Little Cheeseburger,290,<1,20,23,11.5,0,360,0.5,0
+Little Bacon Burger,300,0,20,24,11,0,310,0,0
+Little Bacon Cheeseburger,370,<1,24,30,14.5,0,620,0.5,0
+Bunless Dog,,,,,,,,,
+Hot Dog,285,1,11,26,12,0,800,0,0
+Cheese Dog,355,1.5,15,32,15.5,0,1110,0.5,0
+Bacon Dog,365,1,15,33,15,0,1060,0,0
+Bacon Cheese Dog,435,1.5,19,39,18.5,0,1370,0.5,0
+Toppings,,,,,,,,,
