@@ -1,6 +1,6 @@
 import time
 import numpy as np
-restaurant = None
+import pandas as pd
 #calories, carbs, protein, total_fat, sat_fat, trans_fat, sodium, sugar, fiber
 meal_stats = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0]).astype(float)
 #above is a global list that still has all of the same stats, ill be using this array to add with the arrays you created down below
@@ -23,39 +23,25 @@ def intro():
         print_message("\nChick-Fil-A, that's tuff.")
     elif restaurant == 'chipotle':
         print_message("\nChipotle, that's tuff.")
+        chipotle()
     elif restaurant == 'fuddruckers':
         print_message("\nFuddruckers, that's tuff.")
     else:
         print_message("Learn to spell, holy shit. Try again.")
         intro()
 
-def repeat():  #How can I generalize this function so it can repeat for any restaurant?
+def repeat():
     while True:
+        restaurant_position = {'fiveguys':fiveguys, 'chickfila':None, 'chipotle':chipotle, 'fuddruckers':None}
         more_food = input('\nAre you eating more food?  Please type yes or no: \n').lower()
         if more_food == 'yes':
             print_message("Christ you fatass, alright.")
-            fiveguys()
+            restaurant_position[restaurant]()
         elif more_food == 'no':
             print_message("\nThank god, go exercise.")
             break
         else:
             print_message("\nDidn't get that, try again.")
-
-'''def repeat():
-    global restaurant
-    while True:
-
-        restaurant_position = {'fiveguys':0, 'chickfila':1, 'chipotle':2, 'fuddruckers':3}
-        restaurant_list = [fiveguys()]
-        more_food = input('\nAre you eating more food?  Please type yes or no: \n').lower()
-        if more_food == 'yes':
-            print_message("Christ you fatass, alright.")
-            restaurant_list[restaurant_position[restaurant]]
-        elif more_food == 'no':
-            print_message("\nThank god, go exercise.")
-            break
-        else:
-            print_message("\nDidn't get that, try again.")'''
 
 def fiveguys():
     #burger: hamburger, cheeseburger, baconburger, baconcheeseburger - fries: small, medium, large
@@ -97,7 +83,7 @@ def fiveguys():
         else:
             print_message("Try again.")
             fiveguys()
-        toppings(food)
+        fg_toppings(food)
         #i generalize the toppings statement, this allows me to move the toppings outside of either burger or fries
         print_message("Calculating nutritional info...\n\n")
         print_message("So ...\n\n")
@@ -107,7 +93,7 @@ def fiveguys():
         print_message("Whew! That's a lot of calories.")
         break
 
-def toppings(food):
+def fg_toppings(food):
     #i condensed both fb_toppings and ff_toppings
     #A1 Sauce, barbeque, green peppers, grilled mushrooms, hot sauce, jalapenos, ketchup, lettuce, mayo, mustard, onions, pickles, relish, tomatoes
     fiveguys_toppings = np.array([(15, 3, 0, 0, 0,0, 280, 2, 0), (60, 15, 0, 0, 0, 0, 400, 10, 0), (5, 1, 0, 0, 0, 0, 1, 0, 0), (5, 1, 0, 0, 0, 0, 55, 1, 0), (0, 0, 0, 0, 0, 0, 200, 0, 0), (3, 0, 0, 0, 0, 0, 0, 0, 0), (20, 5, 0, 0, 0, 0, 160, 4, 0), (4, 1, 0, 0, 0, 0, 3, 0, 0), (100, 0, 0, 11, 2, 0, 75, 0, 0), (0, 0, 0, 0, 0, 0, 55, 0, 0), (10, 2, 0, 0, 0, 0, 1, 1, 0), (3, 1, 0, 0, 0, 0, 0, 0, 0), (10 , 3, 0, 0, 0, 0, 105, 3, 0), (9, 2, 0, 0, 0, 0, 3, 1, 0)])
@@ -117,7 +103,7 @@ def toppings(food):
     your_fb_toppings = []
     your_ff_toppings = []
     global meal_stats
-    toppings_dict = {'A1 Sauce': 0, 'barbeque': 1, 'green peppers': 2, 'grilled mushrooms': 3, 'hot sauce': 4, 'jalapenos': 5, 'ketchup': 6, 'lettuce': 7, 'mayo': 8, 'mustard': 9, 'onions': 10, 'pickles': 11, 'relish': 12, 'tomatoes': 13}
+    toppings_dict = {'A1 Sauce': 0, 'barbeque': 1, 'green pepper': 2, 'grilled mushrooms': 3, 'hot sauce': 4, 'jalapenos': 5, 'ketchup': 6, 'lettuce': 7, 'mayo': 8, 'mustard': 9, 'onions': 10, 'pickles': 11, 'relish': 12, 'tomatoes': 13}
     #above is the dictionary i use to map the toppings to numbers for the arrays
     if 'burger' in food:
         while True:
@@ -151,6 +137,32 @@ def toppings(food):
             ff_list.remove(fries_sauce)
             your_ff_toppings.append(fries_sauce)
             print_message(f'\nFor your fries, you have {your_ff_toppings}')
+
+def chipotle():
+#burrito, softtaco, crunchytaco, whiterice, brownrice, blackbeans, pintobeans, fajitaveggies, barbacoa, chicken, carnitas, steak, tomatosalsa, greentomatillosalsa, corn, redtomatillosalsa, cheese, sourcream, guacomole, lettuce, chips
+    chipotle_dict = {'burrito': 0, 'whiterice': 3, 'brownrice': 4}
+    df = pd.read_csv('Chipotle-Nutrition.csv')
+    chipotle_menu = pd.DataFrame(df).to_numpy()
+    print(chipotle_menu)
+    chipotle_menu = np.delete(chipotle_menu, [0], axis = 1)
+    chipotle_menu = chipotle_menu.astype(float)
+    print(chipotle_menu)
+    print(chipotle_menu.shape)
+    while True:
+        global meal_stats
+        food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
+        if food == 'burrito':
+            while True:
+                print(chipotle_menu[chipotle_dict[food]])
+                meal_stats += chipotle_menu[chipotle_dict[food]]
+                burrito_rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing. ').lower().replace(" ", "")
+                if not burrito_rice:
+                    return
+                elif burrito_rice != 'whiterice' and burrito_rice != 'brownrice':
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+                meal_stats += chipotle_menu[chipotle_dict[burrito_rice]]
+                print(meal_stats)
 
 print_message("\nWhat's up fatass!")
 print_message("\nYou ready to grub you pig?!")
