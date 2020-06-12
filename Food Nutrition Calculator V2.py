@@ -140,7 +140,7 @@ def fg_toppings(food):
 
 def chipotle():
 #burrito, softtaco, crunchytaco, whiterice, brownrice, blackbeans, pintobeans, fajitaveggies, barbacoa, chicken, carnitas, steak, tomatosalsa, greentomatillosalsa, corn, redtomatillosalsa, cheese, sourcream, guacomole, lettuce, chips
-    chipotle_dict = {'burrito': 0, 'whiterice': 3, 'brownrice': 4}
+    chipotle_dict = {'burrito':0, 'softtaco':1, 'crunchytaco':2, 'whiterice': 3, 'brownrice': 4, 'blackbeans': 5, 'pintobeans':6, 'fajitaveggies': 7, 'barbacoa':8, 'chicken':9, 'carnitas':10, 'steak':11, 'tomatosalsa':12, 'greentomatillosalsa':13, 'corn':14, 'redtomatillosalsa':15, 'cheese':16, 'sourcream':17, 'guacomole':18, 'lettuce':19, 'chips':20}
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
     print(chipotle_menu)
