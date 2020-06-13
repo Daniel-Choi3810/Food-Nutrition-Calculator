@@ -13,7 +13,7 @@ def print_message(string):  # Delays each print statement by .7 seconds.
     time.sleep(.7)
 
 
-def intro():
+def intro(): #Intro function asks where you're eating, and begins that specific function.
     global restaurant
     restaurant = input('\nOut of ChickfilA, Chipotle, FiveGuys, and Fuddruckers, where are you eating today?:\n')
     if restaurant == 'fiveguys':
@@ -30,7 +30,7 @@ def intro():
         print_message("Learn to spell, holy shit. Try again.")
         intro()
 
-def repeat():
+def repeat(): #Lets you choose more food to eat and cumulatively shows those nutritional stats
     while True:
         restaurant_position = {'fiveguys':fiveguys, 'chickfila':None, 'chipotle':chipotle, 'fuddruckers':None}
         more_food = input('\nAre you eating more food?  Please type yes or no: \n').lower()
@@ -69,7 +69,7 @@ def fiveguys():
                     continue
         elif food == 'fries':
             while True:
-                fries_type = input('\nOut of small, regular, and large, what size fries do you want?:\n').lower().replace(" ", "")
+                fries_type = input('\nOut of small, medium, and large, what size fries do you want?:\n').lower().replace(" ", "")
                 if fries_type in ['small', 'medium', 'large', 'smallfries', 'mediumfries', 'largefries']:
                     #above is the same as before
                     meal_stats += fiveguys_menu[fiveguys_dict[food]][fiveguys_dict[fries_dict[fries_type]]]
@@ -157,13 +157,43 @@ def chipotle():
                 meal_stats += chipotle_menu[chipotle_dict[food]]
                 burrito_rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing. ').lower().replace(" ", "")
                 if not burrito_rice:
-                    return
+                    break
                 elif burrito_rice != 'whiterice' and burrito_rice != 'brownrice':
                     print_message("\nDidn't get that. Please try again.")
                     continue
+
                 meal_stats += chipotle_menu[chipotle_dict[burrito_rice]]
                 print(meal_stats)
+                break
 
+            while True:
+                filling = input('\nWhat type of filling do you want?\n Please type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
+                if not filling:
+                    break
+                elif filling not in chipotle_dict:
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+
+                meal_stats += chipotle_menu[chipotle_dict[filling]]
+                print(meal_stats)
+                break
+
+            while True:
+                beans = input('\nWhat type of beans do you want?\n Please type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
+                if not beans:
+                    break
+                elif beans not in chipotle_dict:
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+                meal_stats += chipotle_menu[chipotle_dict[beans]]
+                print(meal_stats)
+                break
+        elif food == 'burritobowl':
+            None
+        elif food == 'tacos':
+            None
+        elif food == 'chips':
+            None
 print_message("\nWhat's up fatass!")
 print_message("\nYou ready to grub you pig?!")
 intro()
