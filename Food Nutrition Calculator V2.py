@@ -110,7 +110,7 @@ def fg_toppings(food):
             burger_toppings = input(f"\nThe toppings available are:\n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed. \nIf you don't want toppings or are finished, leave the response blank and presss enter:\n\n")
             if not burger_toppings:
                 return
-            elif burger_toppings not in toppings_list and (burger_toppings in fiveguys_toppings):
+            elif burger_toppings not in toppings_list and (burger_toppings in toppings_dict):
                 print_message('\nYou already added that topping in your burger.')
                 continue
             elif burger_toppings not in toppings_list:
@@ -144,26 +144,21 @@ def chipotle():
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
     print(chipotle_menu)
-    chipotle_menu = np.delete(chipotle_menu, [0], axis = 1)
-    chipotle_menu = chipotle_menu.astype(float)
-    print(chipotle_menu)
-    print(chipotle_menu.shape)
+    chipotle_menu = np.delete(chipotle_menu, [0], axis = 1).astype(float)
     while True:
         global meal_stats
         food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
         if food == 'burrito':
             while True:
-                print(chipotle_menu[chipotle_dict[food]])
                 meal_stats += chipotle_menu[chipotle_dict[food]]
-                burrito_rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing. ').lower().replace(" ", "")
-                if not burrito_rice:
+                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing. ').lower().replace(" ", "")
+                if not rice:
                     break
-                elif burrito_rice != 'whiterice' and burrito_rice != 'brownrice':
+                elif rice != 'whiterice' and rice != 'brownrice':
                     print_message("\nDidn't get that. Please try again.")
                     continue
 
-                meal_stats += chipotle_menu[chipotle_dict[burrito_rice]]
-                print(meal_stats)
+                meal_stats += chipotle_menu[chipotle_dict[rice]]
                 break
 
             while True:
@@ -175,7 +170,6 @@ def chipotle():
                     continue
 
                 meal_stats += chipotle_menu[chipotle_dict[filling]]
-                print(meal_stats)
                 break
 
             while True:
@@ -186,7 +180,6 @@ def chipotle():
                     print_message("\nDidn't get that. Please try again.")
                     continue
                 meal_stats += chipotle_menu[chipotle_dict[beans]]
-                print(meal_stats)
                 break
         elif food == 'burritobowl':
             None
@@ -194,6 +187,36 @@ def chipotle():
             None
         elif food == 'chips':
             None
+        else:
+            print_message("Try again.")
+            chipotle()
+        ch_toppings(chipotle_dict, chipotle_menu)
+        print_message("Calculating nutritional info...\n\n")
+        print_message("So ...\n\n")
+        print_message("Much ...\n\n")
+        print_message("Obesity!!!!!\n\n ")
+        print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
+        print_message("Whew! That's a lot of calories.")
+        break
+def ch_toppings(chipotle_dict, chipotle_menu):
+    global meal_stats
+    toppings_list = ['fajitaveggies', 'tomatosalsa', 'greentomatillosalsa', 'corn', 'redtomatillosalsa', 'cheese', 'sourcream', 'guacomole', 'lettuce']
+    your_ch_toppings = []
+    while True:
+        toppings = input(f'The toppings available are: \n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n')
+        if not toppings:
+            return
+        elif toppings not in toppings_list and toppings in chipotle_dict:
+            print_message('\nYou already added that topping in your burrito.')
+            continue
+        elif toppings not in toppings_list:
+            print_message(f"\n{toppings.capitalize()} is not one of the options!")
+            continue
+        meal_stats += chipotle_menu[chipotle_dict[toppings]]
+        #above is the same as before
+        toppings_list.remove(toppings)
+        your_ch_toppings.append(toppings)
+        print_message(f'\nIn your order, you have {your_ch_toppings}.')
 print_message("\nWhat's up fatass!")
 print_message("\nYou ready to grub you pig?!")
 intro()
