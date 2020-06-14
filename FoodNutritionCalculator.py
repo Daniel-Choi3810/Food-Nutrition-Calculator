@@ -63,6 +63,7 @@ def read(filename): #this function returns 4 things, the first two are lists as 
     counter = 0 #counter for the menu dictionary, to map the values
     subcounter = 0 #counter for the submenu dictionary, to map the values
     first = True
+    submenu_key = ""
     list = [] #larger list for the sublists
     sublist = [] #list of the nutritional facts of each menu item
     menu_list = [] #larger list for the menu_sublists
@@ -75,7 +76,9 @@ def read(filename): #this function returns 4 things, the first two are lists as 
             if first:
                 first = False
                 menu_dict[row[1].lower()] = counter
+                submenu_dict[row[1].lower()] = {}
                 counter += 1
+                submenu_key = row[1].lower()
             elif row[1] == 'Toppings':
                 global toppings_there
                 toppings_there = True
@@ -85,15 +88,20 @@ def read(filename): #this function returns 4 things, the first two are lists as 
                 sublist = []
                 menu_sublist = []
                 menu_dict[row[1].lower()] = counter
+                submenu_dict[row[1].lower()] = {}
+                submenu_dict[submenu_key] = subsubmenu_dict
+                submenu_key = row[1].lower()
+                subsubmenu_dict = {}
                 counter += 1
             subcounter = 0
         else:
-            submenu_dict[row[1].lower()] = subcounter
+            subsubmenu_dict[row[1].lower()] = subcounter
             menu_sublist.append(row[1].lower())
             row = pd.to_numeric(row, errors='coerce')
             new_row = row[2:] #takes off all values from the front except for the nutritional facts, we have to do it like this since it is a tuple
             sublist.append(new_row)
             subcounter += 1
+    submenu_dict[submenu_key] = subsubmenu_dict
     return np.array(list), np.array(menu_list), menu_dict, submenu_dict
 
 def options(list, type): #puts the items in a nice line
@@ -130,9 +138,9 @@ def fastfood(restaurant):
             while True:
                 food_type = input(f"\nOut of a {options(restaurant_menu[restaurant_menu_dict[food]], 'or')}, which one do you want?:\n").lower().replace(" ", "")
                 if food_type in format_list(restaurant_menu[restaurant_menu_dict[food]]):
-                    restaurant_submenu_dict =  {k.replace(" ", ""): v for k, v in restaurant_submenu_dict.items()}
+                    restaurant_submenu_dict[food] =  {k.replace(" ", ""): v for k, v in restaurant_submenu_dict[food].items()}
                     print_message("\nMhm, delicious.")
-                    meal_stats += restaurant_facts[restaurant_menu_dict[food]][restaurant_submenu_dict[food_type]]
+                    meal_stats += restaurant_facts[restaurant_menu_dict[food]][restaurant_submenu_dict[food][food_type]]
                     break
                 else:
                     print_message("Didn\'t understand, try again.")
@@ -158,8 +166,10 @@ def toppings(food, restaurant):
     toppings_list = []
     other_submenu_dict = toppings_submenu_dict
     other_submenu_dict = {k.replace(" ", ""): v for k, v in other_submenu_dict.items()}
+    other_submenu_dict[food_type] = {k.replace(" ", ""): v for k, v in other_submenu_dict[food_type].items()}
     toppings_menu_dict =  {k.replace(" ", ""): v for k, v in toppings_menu_dict.items()}
-    toppings_submenu_dict = {v: k for k, v in toppings_submenu_dict.items()}
+    toppings_submenu_dict = {k.replace(" ", ""): v for k, v in toppings_submenu_dict.items()}
+    toppings_submenu_dict[food_type] = {v: k for k, v in toppings_submenu_dict[food_type].items()}
     menu_list = toppings_menu[toppings_menu_dict[food_type]]
     global meal_stats
     if food_type in list(toppings_menu_dict.keys()):
@@ -173,12 +183,9 @@ def toppings(food, restaurant):
             elif toppings_input not in format_list(toppings_menu[toppings_menu_dict[food_type]]):
                 print_message(f"\n{toppings_input.capitalize()} is not one of the options!")
                 continue
-            meal_stats += toppings_facts[toppings_menu_dict[food_type]][other_submenu_dict[toppings_input]]
-            toppings_list.append(toppings_input)
-            print(other_submenu_dict)
-            print(toppings_submenu_dict)
-            print(toppings_submenu_dict[other_submenu_dict[toppings_input]])
-            menu_list[menu_list == toppings_submenu_dict[other_submenu_dict[toppings_input]]]
+            meal_stats += toppings_facts[toppings_menu_dict[food_type]][other_submenu_dict[food_type][toppings_input]]
+            toppings_list.append(toppings_submenu_dict[food_type][other_submenu_dict[food_type][toppings_input]])
+            menu_list[menu_list == toppings_submenu_dict[food_type][other_submenu_dict[food_type][toppings_input]]] = ""
             print_message(f"\nIn your {food_type}, you have {options(toppings_list, 'and')}.")
 
 main()
