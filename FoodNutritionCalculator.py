@@ -138,6 +138,7 @@ def fastfood(restaurant):
             while True:
                 food_type = input(f"\nOut of a {options(restaurant_menu[restaurant_menu_dict[food]], 'or')}, which one do you want?:\n").lower().replace(" ", "")
                 if food_type in format_list(restaurant_menu[restaurant_menu_dict[food]]):
+                    restaurant_submenu_dict = {k.replace(" ", ""): v for k, v in restaurant_submenu_dict.items()}
                     restaurant_submenu_dict[food] =  {k.replace(" ", ""): v for k, v in restaurant_submenu_dict[food].items()}
                     print_message("\nMhm, delicious.")
                     meal_stats += restaurant_facts[restaurant_menu_dict[food]][restaurant_submenu_dict[food][food_type]]
@@ -150,7 +151,7 @@ def fastfood(restaurant):
             continue
         if toppings_there:
             toppings(food, restaurant)
-        print_message("Calculating nutritional info...\n\n")
+        print_message("\n\nCalculating nutritional info...\n\n")
         print_message("So ...\n\n")
         print_message("Much ...\n\n")
         print_message("Obesity!!!!!\n\n ")
@@ -164,17 +165,17 @@ def toppings(food, restaurant):
     #A1 Sauce, barbeque, green peppers, grilled mushrooms, hot sauce, jalapenos, ketchup, lettuce, mayo, mustard, onions, pickles, relish, tomatoes
     food_type = food + "toppings"
     toppings_list = []
-    other_submenu_dict = toppings_submenu_dict
-    other_submenu_dict = {k.replace(" ", ""): v for k, v in other_submenu_dict.items()}
-    other_submenu_dict[food_type] = {k.replace(" ", ""): v for k, v in other_submenu_dict[food_type].items()}
     toppings_menu_dict =  {k.replace(" ", ""): v for k, v in toppings_menu_dict.items()}
-    toppings_submenu_dict = {k.replace(" ", ""): v for k, v in toppings_submenu_dict.items()}
-    toppings_submenu_dict[food_type] = {v: k for k, v in toppings_submenu_dict[food_type].items()}
-    menu_list = toppings_menu[toppings_menu_dict[food_type]]
     global meal_stats
     if food_type in list(toppings_menu_dict.keys()):
+        other_submenu_dict = toppings_submenu_dict
+        other_submenu_dict = {k.replace(" ", ""): v for k, v in other_submenu_dict.items()}
+        other_submenu_dict[food_type] = {k.replace(" ", ""): v for k, v in other_submenu_dict[food_type].items()}
+        toppings_submenu_dict = {k.replace(" ", ""): v for k, v in toppings_submenu_dict.items()}
+        toppings_submenu_dict[food_type] = {v: k for k, v in toppings_submenu_dict[food_type].items()}
+        menu_list = toppings_menu[toppings_menu_dict[food_type]]
         while True:
-            toppings_input = input(f"\nThe toppings available are:\n\n{options(menu_list, 'or')}\n\nWhat toppings do you want? \nIf you don't want toppings or are finished, leave the response blank and presss enter:\n\n").lower().replace(" ", "")
+            toppings_input = input(f"\nThe toppings available are:\n\n{options(menu_list, 'or')}\n\nWhat toppings do you want? \nIf you don't want toppings or are finished, leave the response blank and press enter:").lower().replace(" ", "")
             if not toppings_input:
                 return
             elif toppings_input not in format_list(toppings_menu[toppings_menu_dict[food_type]]) and (toppings_input in toppings_list):
@@ -187,5 +188,7 @@ def toppings(food, restaurant):
             toppings_list.append(toppings_submenu_dict[food_type][other_submenu_dict[food_type][toppings_input]])
             menu_list[menu_list == toppings_submenu_dict[food_type][other_submenu_dict[food_type][toppings_input]]] = ""
             print_message(f"\nIn your {food_type}, you have {options(toppings_list, 'and')}.")
+    else:
+        return
 
 main()
