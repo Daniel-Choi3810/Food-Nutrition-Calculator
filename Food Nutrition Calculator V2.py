@@ -15,7 +15,7 @@ def print_message(string):  # Delays each print statement by .7 seconds.
 
 def intro(): #Intro function asks where you're eating, and begins that specific function.
     global restaurant
-    restaurant = input('\nOut of ChickfilA, Chipotle, FiveGuys, and Fuddruckers, where are you eating today?:\n')
+    restaurant = input('\nOut of ChickfilA, Chipotle, FiveGuys, and Fuddruckers, where are you eating today?:\n').lower().replace(" ", "")
     if restaurant == 'fiveguys':
         print_message("\nFiveGuys, that's tuff.")
         fiveguys()
@@ -143,14 +143,13 @@ def chipotle():
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
     print(chipotle_menu)
-    chipotle_menu = np.delete(chipotle_menu, [0], axis = 1).astype(float)
     while True:
         global meal_stats
         food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
         if food == 'burrito':
             while True:
                 meal_stats += chipotle_menu[chipotle_dict[food]]
-                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing. ').lower().replace(" ", "")
+                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing:\n ').lower().replace(" ", "")
                 if not rice:
                     break
                 elif rice != 'whiterice' and rice != 'brownrice':
@@ -161,7 +160,7 @@ def chipotle():
                 break
 
             while True:
-                filling = input('\nWhat type of filling do you want?\n Please type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
+                filling = input('\nWhat type of filling do you want?\nPlease type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
                 if not filling:
                     break
                 elif filling not in chipotle_dict:
@@ -172,7 +171,7 @@ def chipotle():
                 break
 
             while True:
-                beans = input('\nWhat type of beans do you want?\n Please type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
+                beans = input('\nWhat type of beans do you want?\nPlease type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
                 if not beans:
                     break
                 elif beans not in chipotle_dict:
