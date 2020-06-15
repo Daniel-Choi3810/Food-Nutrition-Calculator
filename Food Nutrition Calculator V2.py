@@ -27,7 +27,7 @@ def intro(): #Intro function asks where you're eating, and begins that specific 
     elif restaurant == 'fuddruckers':
         print_message("\nFuddruckers, that's tuff.")
     else:
-        print_message("Learn to spell, holy shit. Try again.")
+        print_message("Didn't get that, try again.")
         intro()
 
 def repeat(): #Lets you choose more food to eat and cumulatively shows those nutritional stats
@@ -54,7 +54,7 @@ def fiveguys():
     while True:
         global meal_stats
         #above i am referencing the meal_stats global variable to be able to make edits to it
-        food = input("\nWhat're you tryna eat?  Please state whether you want a burger or fries, f a t t y:\n").lower().replace(" ", "")
+        food = input("\nWhat're you tryna eat?  Please state whether you want a burger or fries:\n").lower().replace(" ", "")
         if food == 'burger':
             while True:
                 burger_type = input('\nOut of a hamburger, cheeseburger, baconburger, and bacon cheeseburger, which one do you want?:\n').lower().replace(" ", "")
@@ -86,11 +86,10 @@ def fiveguys():
         fg_toppings(food)
         #i generalize the toppings statement, this allows me to move the toppings outside of either burger or fries
         print_message("Calculating nutritional info...\n\n")
-        print_message("So ...\n\n")
-        print_message("Much ...\n\n")
-        print_message("Obesity!!!!!\n\n ")
+        print_message("...\n\n")
+        print_message("...\n\n")
+        print_message("...\n\n")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
-        print_message("Whew! That's a lot of calories.")
         break
 
 def fg_toppings(food):
@@ -110,7 +109,7 @@ def fg_toppings(food):
             burger_toppings = input(f"\nThe toppings available are:\n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed. \nIf you don't want toppings or are finished, leave the response blank and presss enter:\n\n")
             if not burger_toppings:
                 return
-            elif burger_toppings not in toppings_list and (burger_toppings in toppings_dict):
+            elif burger_toppings not in toppings_list and burger_toppings in toppings_dict:
                 print_message('\nYou already added that topping in your burger.')
                 continue
             elif burger_toppings not in toppings_list:
@@ -192,11 +191,9 @@ def chipotle():
             chipotle()
         ch_toppings(chipotle_dict, chipotle_menu)
         print_message("Calculating nutritional info...\n\n")
-        print_message("So ...\n\n")
-        print_message("Much ...\n\n")
-        print_message("Obesity!!!!!\n\n ")
+        print_message("...\n\n")
+        print_message("...\n\n")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
-        print_message("Whew! That's a lot of calories.")
         break
 def ch_toppings(chipotle_dict, chipotle_menu):
     global meal_stats
@@ -217,7 +214,5 @@ def ch_toppings(chipotle_dict, chipotle_menu):
         toppings_list.remove(toppings)
         your_ch_toppings.append(toppings)
         print_message(f'\nIn your order, you have {your_ch_toppings}.')
-print_message("\nWhat's up fatass!")
-print_message("\nYou ready to grub you pig?!")
 intro()
 repeat()
