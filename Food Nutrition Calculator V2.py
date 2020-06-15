@@ -54,25 +54,25 @@ def fiveguys():
     while True:
         global meal_stats
         #above i am referencing the meal_stats global variable to be able to make edits to it
-        food = input("\nWhat're you tryna eat?  Please state whether you want a burger or fries:\n").lower().replace(" ", "")
-        if food == 'burger':
+        f_food = input("\nWhat're you tryna eat?  Please state whether you want a burger or fries:\n").lower().replace(" ", "")
+        if f_food == 'burger':
             while True:
                 burger_type = input('\nOut of a hamburger, cheeseburger, baconburger, and bacon cheeseburger, which one do you want?:\n').lower().replace(" ", "")
                 if burger_type in ['hamburger', 'cheeseburger', 'baconburger', 'baconcheeseburger']:
                     #above, instead of having an if statement for each burger, i created one if statement to detect any burger, due to code below, i get this flexibility
                     print_message("\nMhm, delicious.")
-                    meal_stats += fiveguys_menu[fiveguys_dict[food]][fiveguys_dict[burger_type]]
+                    meal_stats += fiveguys_menu[fiveguys_dict[f_food]][fiveguys_dict[burger_type]]
                     #above is the statement that allows a lot of condensing, since i can add arrays using numpy, it condenses adding each element of each array
                     break
                 else:
                     print_message('Didn\'t understand, try again.')
                     continue
-        elif food == 'fries':
+        elif f_food == 'fries':
             while True:
                 fries_type = input('\nOut of small, medium, and large, what size fries do you want?:\n').lower().replace(" ", "")
                 if fries_type in ['small', 'medium', 'large', 'smallfries', 'mediumfries', 'largefries']:
                     #above is the same as before
-                    meal_stats += fiveguys_menu[fiveguys_dict[food]][fiveguys_dict[fries_dict[fries_type]]]
+                    meal_stats += fiveguys_menu[fiveguys_dict[f_food]][fiveguys_dict[fries_dict[fries_type]]]
                     #above is the same as before
                     print_message(f"\n{fries_dict[fries_type]} fries coming up.\n")
                     #above, because i created the fries_dict dictionary, i can use that dictionary to enter the type of fries into the fstring
@@ -83,7 +83,7 @@ def fiveguys():
         else:
             print_message("Try again.")
             fiveguys()
-        fg_toppings(food)
+        fg_toppings(f_food)
         #i generalize the toppings statement, this allows me to move the toppings outside of either burger or fries
         print_message("Calculating nutritional info...\n\n")
         print_message("...\n\n")
@@ -92,7 +92,7 @@ def fiveguys():
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
         break
 
-def fg_toppings(food):
+def fg_toppings(f_food):
     #i condensed both fb_toppings and ff_toppings
     #A1 Sauce, barbeque, green peppers, grilled mushrooms, hot sauce, jalapenos, ketchup, lettuce, mayo, mustard, onions, pickles, relish, tomatoes
     fiveguys_toppings = np.array([(15, 3, 0, 0, 0,0, 280, 2, 0), (60, 15, 0, 0, 0, 0, 400, 10, 0), (5, 1, 0, 0, 0, 0, 1, 0, 0), (5, 1, 0, 0, 0, 0, 55, 1, 0), (0, 0, 0, 0, 0, 0, 200, 0, 0), (3, 0, 0, 0, 0, 0, 0, 0, 0), (20, 5, 0, 0, 0, 0, 160, 4, 0), (4, 1, 0, 0, 0, 0, 3, 0, 0), (100, 0, 0, 11, 2, 0, 75, 0, 0), (0, 0, 0, 0, 0, 0, 55, 0, 0), (10, 2, 0, 0, 0, 0, 1, 1, 0), (3, 1, 0, 0, 0, 0, 0, 0, 0), (10 , 3, 0, 0, 0, 0, 105, 3, 0), (9, 2, 0, 0, 0, 0, 3, 1, 0)])
@@ -104,7 +104,7 @@ def fg_toppings(food):
     global meal_stats
     toppings_dict = {'A1 Sauce': 0, 'barbeque': 1, 'green pepper': 2, 'grilled mushrooms': 3, 'hot sauce': 4, 'jalapenos': 5, 'ketchup': 6, 'lettuce': 7, 'mayo': 8, 'mustard': 9, 'onions': 10, 'pickles': 11, 'relish': 12, 'tomatoes': 13}
     #above is the dictionary i use to map the toppings to numbers for the arrays
-    if 'burger' in food:
+    if 'burger' in f_food:
         while True:
             burger_toppings = input(f"\nThe toppings available are:\n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed. \nIf you don't want toppings or are finished, leave the response blank and presss enter:\n\n")
             if not burger_toppings:
@@ -120,7 +120,7 @@ def fg_toppings(food):
             toppings_list.remove(burger_toppings)
             your_fb_toppings.append(burger_toppings)
             print_message(f'\nIn your burger, you have {your_fb_toppings}.')
-    elif 'fries' in food:
+    elif 'fries' in f_food:
         while True:
             fries_sauce = input(f"\nThe toppings available are:\n\n{ff_list}\n\nWhat sauces do you want? Please be specific to the spelling listed. \nIf you don't want sauces or are finished, leave the response blank and press enter: \n\n")
             if not fries_sauce:
@@ -146,60 +146,12 @@ def chipotle():
         global meal_stats
         food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
         if food == 'burrito':
-            while True:
-                meal_stats += chipotle_menu[chipotle_dict[food]]
-                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing:\n ').lower().replace(" ", "")
-                if not rice:
-                    break
-                elif rice != 'whiterice' and rice != 'brownrice':
-                    print_message("\nDidn't get that. Please try again.")
-                    continue
-
-                meal_stats += chipotle_menu[chipotle_dict[rice]]
-                break
-
-            while True:
-                filling = input('\nWhat type of filling do you want?\nPlease type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
-                if not filling:
-                    break
-                elif filling not in chipotle_dict:
-                    print_message("\nDidn't get that. Please try again.")
-                    continue
-
-                meal_stats += chipotle_menu[chipotle_dict[filling]]
-                break
-
-            while True:
-                beans = input('\nWhat type of beans do you want?\nPlease type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
-                if not beans:
-                    break
-                elif beans not in chipotle_dict:
-                    print_message("\nDidn't get that. Please try again.")
-                    continue
-                meal_stats += chipotle_menu[chipotle_dict[beans]]
-                break
+            meal_stats += chipotle_menu[chipotle_dict[food]]
+            ch_basics(chipotle_dict, chipotle_menu, food)
         elif food == 'burritobowl':
-            while True:
-                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing:\n ').lower().replace(" ", "")
-                if not rice:
-                    break
-                elif rice != 'whiterice' and rice != 'brownrice':
-                    print_message("\nDidn't get that. Please try again.")
-                    continue
-
-                meal_stats += chipotle_menu[chipotle_dict[rice]]
-                break
-
-            while True:
-                filling = input('\nWhat type of filling do you want?\nPlease type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
-                if not filling:
-                    break
-                elif filling not in chipotle_dict:
-                    print_message("\nDidn't get that. Please try again.")
-                    continue
-
-                meal_stats += chipotle_menu[chipotle_dict[filling]]
-                break
+            ch_basics(chipotle_dict, chipotle_menu, food)
+        elif food == 'tacos':
+            taco_type = input('\nWhat type of taco do you want?\nType either crunchy taco or soft taco.').lower().replace(" ", "")
 
             while True:
                 beans = input('\nWhat type of beans do you want?\nPlease type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
@@ -210,8 +162,6 @@ def chipotle():
                     continue
                 meal_stats += chipotle_menu[chipotle_dict[beans]]
                 break
-        elif food == 'tacos':
-            None
         elif food == 'chips':
             None
         else:
@@ -223,6 +173,41 @@ def chipotle():
         print_message("...\n\n")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
         break
+
+def ch_basics(chipotle_dict, chipotle_menu, food):
+    global meal_stats
+    while True:
+        rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing:\n ').lower().replace(" ", "")
+        if not rice:
+            break
+        elif rice != 'whiterice' and rice != 'brownrice':
+            print_message("\nDidn't get that. Please try again.")
+            continue
+
+        meal_stats += chipotle_menu[chipotle_dict[rice]]
+        break
+
+    while True:
+        filling = input('\nWhat type of filling do you want?\nPlease type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
+        if not filling:
+            break
+        elif filling not in chipotle_dict:
+            print_message("\nDidn't get that. Please try again.")
+            continue
+
+        meal_stats += chipotle_menu[chipotle_dict[filling]]
+        break
+
+    while True:
+        beans = input('\nWhat type of beans do you want?\nPlease type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
+        if not beans:
+            break
+        elif beans not in chipotle_dict:
+            print_message("\nDidn't get that. Please try again.")
+            continue
+        meal_stats += chipotle_menu[chipotle_dict[beans]]
+        break
+
 def ch_toppings(chipotle_dict, chipotle_menu):
     global meal_stats
     toppings_list = ['fajitaveggies', 'tomatosalsa', 'greentomatillosalsa', 'corn', 'redtomatillosalsa', 'cheese', 'sourcream', 'guacomole', 'lettuce']
