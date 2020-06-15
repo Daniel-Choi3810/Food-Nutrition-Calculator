@@ -142,7 +142,6 @@ def chipotle():
     chipotle_dict = {'burrito':0, 'softtaco':1, 'crunchytaco':2, 'whiterice': 3, 'brownrice': 4, 'blackbeans': 5, 'pintobeans':6, 'fajitaveggies': 7, 'barbacoa':8, 'chicken':9, 'carnitas':10, 'steak':11, 'tomatosalsa':12, 'greentomatillosalsa':13, 'corn':14, 'redtomatillosalsa':15, 'cheese':16, 'sourcream':17, 'guacomole':18, 'lettuce':19, 'chips':20}
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
-    print(chipotle_menu)
     while True:
         global meal_stats
         food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
@@ -180,7 +179,37 @@ def chipotle():
                 meal_stats += chipotle_menu[chipotle_dict[beans]]
                 break
         elif food == 'burritobowl':
-            None
+            while True:
+                rice = input('\nWhat type of rice do you want?\nPlease type either white rice, brown rice, or nothing:\n ').lower().replace(" ", "")
+                if not rice:
+                    break
+                elif rice != 'whiterice' and rice != 'brownrice':
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+
+                meal_stats += chipotle_menu[chipotle_dict[rice]]
+                break
+
+            while True:
+                filling = input('\nWhat type of filling do you want?\nPlease type either barbacoa, chicken, carnitas, steak, or nothing:\n').lower().replace(" ", "")
+                if not filling:
+                    break
+                elif filling not in chipotle_dict:
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+
+                meal_stats += chipotle_menu[chipotle_dict[filling]]
+                break
+
+            while True:
+                beans = input('\nWhat type of beans do you want?\nPlease type either black beans, pinto beans, or nothing:\n').lower().replace(" ", "")
+                if not beans:
+                    break
+                elif beans not in chipotle_dict:
+                    print_message("\nDidn't get that. Please try again.")
+                    continue
+                meal_stats += chipotle_menu[chipotle_dict[beans]]
+                break
         elif food == 'tacos':
             None
         elif food == 'chips':
