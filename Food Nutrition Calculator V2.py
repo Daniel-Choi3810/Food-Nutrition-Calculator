@@ -139,8 +139,8 @@ def fg_toppings(f_food):
 
 def chipotle():
 #burrito, softtaco, crunchytaco, whiterice, brownrice, blackbeans, pintobeans, fajitaveggies, barbacoa, chicken, carnitas, steak, tomatosalsa, greentomatillosalsa, corn, redtomatillosalsa, cheese, sourcream, guacomole, lettuce, chips
-    chipotle_dict = {'burrito':0, 'softtaco':1, 'crunchytaco':2, 'whiterice': 3, 'brownrice': 4, 'blackbeans': 5, 'pintobeans':6, 'fajitaveggies': 7, 'barbacoa':8, 'chicken':9, 'carnitas':10, 'steak':11, 'tomatosalsa':12, 'greentomatillosalsa':13, 'corn':14, 'redtomatillosalsa':15, 'cheese':16, 'sourcream':17, 'guacomole':18, 'lettuce':19, 'chips':20}
-    chip_toppings = ['tomatosalsa', 'greentomatillosalsa','redtomatillosalsa', 'guacomole']
+    chipotle_dict = {'burrito':0, 'softtaco':1, 'crunchytaco':2, 'whiterice': 3, 'brownrice': 4, 'blackbeans': 5, 'pintobeans':6, 'fajitaveggies': 7, 'barbacoa':8, 'chicken':9, 'carnitas':10, 'steak':11, 'tomatosalsa':12, 'greentomatillosalsa':13, 'corn':14, 'redtomatillosalsa':15, 'cheese':16, 'sourcream':17, 'guacomole':18, 'lettuce':19, 'chips':20, 'largechips':21, 'queso':22}
+    chip_toppings = ['tomatosalsa', 'greentomatillosalsa','redtomatillosalsa', 'guacomole', 'queso']
     your_chip_toppings = []
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
@@ -173,9 +173,10 @@ def chipotle():
             ch_toppings(chipotle_dict, chipotle_menu)
             if num_tacos == 1:
                 meal_stats /= 3
-                meal_stats = np.round(meal_stats)
+                meal_stats = np.around(meal_stats, decimals = 1)
             elif num_tacos == 2:
-                meal_stats = np.round(meal_stats)
+                meal_stats /= 1.5
+                meal_stats = np.around(meal_stats, decimals = 1)
         elif ch_food == 'chips':
             meal_stats += chipotle_menu[chipotle_dict[ch_food]]
             while True:
@@ -237,7 +238,7 @@ def ch_basics(chipotle_dict, chipotle_menu, ch_food):
 
 def ch_toppings(chipotle_dict, chipotle_menu):
     global meal_stats
-    toppings_list = ['fajitaveggies', 'tomatosalsa', 'greentomatillosalsa', 'corn', 'redtomatillosalsa', 'cheese', 'sourcream', 'guacomole', 'lettuce']
+    toppings_list = ['fajitaveggies', 'tomatosalsa', 'greentomatillosalsa', 'corn', 'redtomatillosalsa', 'cheese', 'sourcream', 'guacomole', 'lettuce', 'queso']
     your_ch_toppings = []
     while True:
         toppings = input(f'The toppings available are: \n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n').lower().replace(" ", "")
@@ -253,6 +254,6 @@ def ch_toppings(chipotle_dict, chipotle_menu):
         #above is the same as before
         toppings_list.remove(toppings)
         your_ch_toppings.append(toppings)
-        print_message(f'\nIn your order, you have {your_ch_toppings}.')
+        print(f'\nIn your order, you have {your_ch_toppings}.\n')
 intro()
 repeat()
