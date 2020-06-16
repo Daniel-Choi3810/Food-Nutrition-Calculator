@@ -178,19 +178,30 @@ def chipotle():
                 meal_stats /= 1.5
                 meal_stats = np.around(meal_stats, decimals = 1)
         elif ch_food == 'chips':
-            meal_stats += chipotle_menu[chipotle_dict[ch_food]]
+            while True:
+                chip_type = input("\nWhat size chips do you want?\nPlease type either regular or large:\n\n").lower().replace(" ", "")
+                if chip_type == 'regular':
+                    meal_stats += chipotle_menu[chipotle_dict[ch_food]]
+                    break
+                elif chip_type == 'large':
+                    ch_food = 'largechips'
+                    meal_stats += chipotle_menu[chipotle_dict[ch_food]]
+                    break
+                else:
+                    print_message("\nDidn't understand. Try again.\n")
             while True:
                 chip_sauces = input(f"\nOut of {chip_toppings}\nWhat sauces do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n").lower().replace(" ", "")
                 if not chip_sauces:
                     break
                 elif chip_sauces not in chip_toppings and chip_sauces in chipotle_dict:
-                    print_message('\nYou already added that topping in your burrito.')
+                    print_message('\nYou already added that topping.')
                     continue
                 elif chip_sauces not in chip_toppings:
                     print_message(f"\n{toppings.capitalize()} is not one of the options!")
                     continue
                 meal_stats += chipotle_menu[chipotle_dict[chip_sauces]]
-                #above is the same as before
+                if chip_sauces == 'queso':
+                    meal_stats += chipotle_menu[chipotle_dict[chip_sauces]]
                 chip_toppings.remove(chip_sauces)
                 your_chip_toppings.append(chip_sauces)
                 print_message(f'\nIn your order, you have {your_chip_toppings}.')
