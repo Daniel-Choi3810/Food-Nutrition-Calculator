@@ -140,11 +140,13 @@ def fg_toppings(f_food):
 def chipotle():
 #burrito, softtaco, crunchytaco, whiterice, brownrice, blackbeans, pintobeans, fajitaveggies, barbacoa, chicken, carnitas, steak, tomatosalsa, greentomatillosalsa, corn, redtomatillosalsa, cheese, sourcream, guacomole, lettuce, chips
     chipotle_dict = {'burrito':0, 'softtaco':1, 'crunchytaco':2, 'whiterice': 3, 'brownrice': 4, 'blackbeans': 5, 'pintobeans':6, 'fajitaveggies': 7, 'barbacoa':8, 'chicken':9, 'carnitas':10, 'steak':11, 'tomatosalsa':12, 'greentomatillosalsa':13, 'corn':14, 'redtomatillosalsa':15, 'cheese':16, 'sourcream':17, 'guacomole':18, 'lettuce':19, 'chips':20}
+    chip_toppings = ['tomatosalsa', 'greentomatillosalsa','redtomatillosalsa', 'guacomole']
+    your_chip_toppings = []
     df = pd.read_csv('Chipotle-Nutrition.csv')
     chipotle_menu = pd.DataFrame(df).to_numpy()
     while True:
         global meal_stats
-        ch_food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n").lower().replace(" ", "")
+        ch_food = input("\nWhat're you tryna eat?  Please state whether you want a burrito, a burrito bowl, tacos, or chips:\n\n").lower().replace(" ", "")
         if ch_food == 'burrito':
             meal_stats += chipotle_menu[chipotle_dict[ch_food]]
             ch_basics(chipotle_dict, chipotle_menu, ch_food)
@@ -175,7 +177,22 @@ def chipotle():
             elif num_tacos == 2:
                 meal_stats = np.round(meal_stats)
         elif ch_food == 'chips':
-            None
+            meal_stats += chipotle_menu[chipotle_dict[ch_food]]
+            while True:
+                chip_sauces = input(f"\nOut of {chip_toppings}\nWhat sauces do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n").lower().replace(" ", "")
+                if not chip_sauces:
+                    break
+                elif chip_sauces not in chip_toppings and chip_sauces in chipotle_dict:
+                    print_message('\nYou already added that topping in your burrito.')
+                    continue
+                elif chip_sauces not in chip_toppings:
+                    print_message(f"\n{toppings.capitalize()} is not one of the options!")
+                    continue
+                meal_stats += chipotle_menu[chipotle_dict[chip_sauces]]
+                #above is the same as before
+                chip_toppings.remove(chip_sauces)
+                your_chip_toppings.append(chip_sauces)
+                print_message(f'\nIn your order, you have {your_chip_toppings}.')
         else:
             print_message("Try again.")
             chipotle()
