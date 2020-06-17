@@ -21,6 +21,7 @@ def intro(): #Intro function asks where you're eating, and begins that specific 
         fiveguys()
     elif restaurant == 'chickfila':
         print_message("\nChick-Fil-A, that's tuff.")
+        chickfila()
     elif restaurant == 'chipotle':
         print_message("\nChipotle, that's tuff.")
         chipotle()
@@ -90,6 +91,10 @@ def fiveguys():
         print_message("...\n\n")
         print_message("...\n\n")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
+        if meal_stats[2] < 25:
+            print_message(f"\nOnly {meal_stats[2]} grams of protein?  You sure?")
+        elif meal_stats[3] > 30:
+            print_message(f"\n{meal_stats[3]} grams of fat?? Maybe ease up a little.")
         break
 
 def fg_toppings(f_food):
@@ -212,6 +217,10 @@ def chipotle():
         print_message("...\n\n")
         print_message("...\n\n")
         print_message(f"\n\nYour meal contains:\n{meal_stats[0]} calories \n{meal_stats[1]} grams of carbs \n{meal_stats[2]} grams of protein \n{meal_stats[3]} grams of total fat \n{meal_stats[4]} grams of saturated fat \n{meal_stats[5]} grams of trans fat \n{meal_stats[6]} milligrams of sodium \n{meal_stats[7]} grams of sugar \n{meal_stats[8]} grams of fiber\n")
+        if meal_stats[2] < 25:
+            print_message(f"\nOnly {meal_stats[2]} grams of protein?  You sure?")
+        elif meal_stats[3] > 30:
+            print_message(f"\n{meal_stats[3]} grams of fat?? Maybe ease up a little.")
         break
 
 def ch_basics(chipotle_dict, chipotle_menu, ch_food):
@@ -252,7 +261,7 @@ def ch_toppings(chipotle_dict, chipotle_menu):
     toppings_list = ['fajitaveggies', 'tomatosalsa', 'greentomatillosalsa', 'corn', 'redtomatillosalsa', 'cheese', 'sourcream', 'guacomole', 'lettuce', 'queso']
     your_ch_toppings = []
     while True:
-        toppings = input(f'The toppings available are: \n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n').lower().replace(" ", "")
+        toppings = input(f'\nThe toppings available are: \n\n{toppings_list}\n\nWhat toppings do you want? Please be specific to the spelling listed\nIf you don\'t want toppings or are finished, leave the response blank and presss enter:\n\n').lower().replace(" ", "")
         if not toppings:
             return
         elif toppings not in toppings_list and toppings in chipotle_dict:
@@ -265,6 +274,10 @@ def ch_toppings(chipotle_dict, chipotle_menu):
         #above is the same as before
         toppings_list.remove(toppings)
         your_ch_toppings.append(toppings)
-        print(f'\nIn your order, you have {your_ch_toppings}.\n')
+        print('\n...')
+        print(f'\nIn your order, you have {your_ch_toppings}.\n\n')
+
+def chickfila():
+    None
 intro()
 repeat()
